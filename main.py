@@ -117,6 +117,7 @@ def add_board():
     name = request.form.get('board_add')
     board_id += 1
     boards.update_one({"board_id_counter": {"$exists": "true"}}, {"$set": {"board_id_counter": board_id}})
+    #boards.insert_one({'board_id': board_id})
     boards.insert_one({'board_id': board_id})
     return redirect('/workspace', 302)
 
