@@ -103,33 +103,6 @@ header .user {
     border-radius: 0.5rem;
 }
 
-#overlay {
-    position: fixed; /* Sit on top of the page content */
-    display: none; /* Hidden by default */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-}
-
-#task-window {
-    display: none;
-    width: 400px;
-    height: 500px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-    background-color: white;
-    border-radius: 10px;
-    text-align: center;
-    z-index: 11;
-}
-
 .list-group{
     padding: 20px 35px;
     height: 100%;
@@ -196,4 +169,66 @@ header .user {
 
 #input {
     width: 100%;
+}
+
+/* task window */
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+#task-window {
+    display: none;
+    width: 400px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 11;
+    padding: 0 20px;
+}
+
+#task-window .task-name {
+    padding: 10px 20px;
+    text-align: left;
+    font-size: 25px;
+}
+
+#task-window .characteristics {
+    color:rgb(120, 120, 120);
+    text-align: left;
+}
+
+#task-window .description-wrapper {
+    margin: auto 0;
+    display: inline-block;
+    width: 80%;
+}
+
+#task-window label {
+    padding: 10px 20px;
+    text-align: left;
+    font-size: 25px;
+    width: 100%;
+    display: inline-block;
+}
+
+#task-window .description-wrapper .task-description {
+    background-color: rgb(246, 246, 246);
+    width: 100%;
+    border-radius: 0.5rem;
+    position: relative;
+    text-align: left;
 }

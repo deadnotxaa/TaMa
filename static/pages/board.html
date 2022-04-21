@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="board.css">
     <script src="../jslib/sortable.js"></script>
+    <script src="init.js"></script>
 </head>
 <body>
     <header>
@@ -35,7 +36,19 @@
           </div>
     </div>
     <div id="overlay"></div>
-    <div id="task-window"></div>
+    <div id="task-window">
+      <p class="task-name">Сделать д/з</p>
+      <div class="characteristics">
+        <p class="task-prior">Приоритет: 1</p>
+        <p class="task-created">Назначил: damik2005</p>
+        <p class="task-attached">Назначено для: damik2005</p>
+      </div>
+      <label>Описание</label>
+      <div class="description-wrapper">
+        <p class="task-description">Очень важно сделать д/з</p>
+      </div>
+
+    </div>
     <script src="board.js"></script>
 </body>
 </html>
