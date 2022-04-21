@@ -1,0 +1,199 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background-attachment: fixed;
+}
+
+header {
+    position: relative;
+    height: 5vh;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.6s;
+    padding: 30px 50px;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+header .lefts {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: 10px;
+    width: 300px;
+}
+
+header .lefts #logo {
+    position: relative;
+    font-weight: 700;
+    color: #C287E8;
+    text-decoration: none;
+    font-size: 2rem; 
+    letter-spacing: 2px;
+    transition: 0.6s;
+}
+
+header .lefts p{
+    align-self: center;
+}
+
+header #boards {
+    text-decoration: none;
+    font-size: 20px;
+    color: #90809a;
+    transition: 0.5s;
+    width: 300px;
+    text-align: center;
+}
+
+header #boards:hover {
+    color: #C287E8;
+}
+
+header .user {
+    font-size: 18px;
+    text-align: end;
+    color: #90809a;
+    width: 300px;
+}
+
+header p a{
+    color: #90809a;
+}
+
+header .user {
+    color: #C287E8;
+}
+
+#Todo {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: flex-start;
+    text-align: center;
+    margin: 0;
+    list-style: none;
+    height: 90vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background-color: #fffafd;
+}
+
+.create-button {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    box-shadow: rgba(0,0,0,0.1) 0 0 7px;
+    background-color: white;
+    margin: 5px 0;
+    border-radius: 0.5rem;
+}
+
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+#task-window {
+    display: none;
+    width: 400px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 11;
+}
+
+.list-group{
+    padding: 20px 35px;
+    height: 100%;
+    width: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin:20px 0;
+    border-radius: 4px;
+}
+
+.list-group p {
+    text-align: left;
+    font-size: 20px;
+    width: 100%;
+    height: max-content;
+    margin: 20px 0;
+}
+
+.sort {
+    width: 200px;
+    padding: 15px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px;
+}
+
+.list-group-item {
+    overflow: hidden;
+    box-shadow: rgba(0,0,0,0.1) 0 0 7px;
+    min-height: 15px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    width: 100%;
+    margin: 5px 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #FFF;
+}
+
+.wrapper {
+    background-color: white;
+}
+.hidden {
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    border:0;
+    display:block;
+    min-height: 0;
+}
+
+.nodrag {
+    background-color: rgb(252, 229, 229);
+    color: rgb(252, 229, 229);
+    border: none;
+    opacity: 1;
+}
+
+.create-column {
+    color: rgba(0, 0, 0, 0.21);
+    margin-top: 72px;
+}
+
+#input {
+    width: 100%;
+}

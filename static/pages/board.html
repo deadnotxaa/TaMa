@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="board.css">
+    <script src="../jslib/sortable.js"></script>
+</head>
+<body>
+    <header>
+      <div class="lefts">   
+        <a href="../index.html" id="logo">TaMa</a>
+        <p>TaMa Project</p>
+      </div>
+        <a href="#" id="boards">My boards</a> 
+      <p class="user">Приятной работы, <span class="user">damik2005</span> <br> <a href="../index.html">Выход</a></p>
+    </header>
+    <div id="Todo">
+        <div class="list-group">
+            <p class="">Необходимо сделать</p>
+            <div class="hidden list-group-item"></div>
+            <input class="create-button" placeholder=" + Создайте задачу!"> 
+          </div>
+          <div class="list-group">
+            <p>Сделано</p>
+            <div class="hidden list-group-item"></div>
+            <div class="list-group-item"></div>
+            <input class="create-button" placeholder=" + Создайте задачу!">
+          </div>
+          <div class="list-group">
+            <p>Делаю</p>
+            <div class="hidden list-group-item"></div>
+            <input class="create-button" placeholder=" + Создайте задачу!">
+          </div>
+          <div class="sort">
+            <input class="create-column" placeholder=" + Создайте колонну">
+          </div>
+    </div>
+    <div id="overlay"></div>
+    <div id="task-window"></div>
+    <script src="board.js"></script>
+</body>
+</html>
