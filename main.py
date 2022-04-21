@@ -1,10 +1,11 @@
 import jinja2
-from flask import Flask, request, make_response, render_template, url_for
+from flask import Flask, request, make_response, render_template, url_for, jsonify
 from jinja2 import Template, FileSystemLoader, Environment
 from werkzeug.utils import redirect
 from pymongo import MongoClient
 import secrets
 from flask_cors import CORS
+from bson.json_util import dumps, loads
 
 client = MongoClient("localhost", 27017)
 db = client.database
@@ -22,11 +23,9 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 user_id = users.find({"user_id_counter": {"$exists": "true"}})[0]["user_id_counter"]
 board_id = boards.find({"board_id_counter": {"$exists": "true"}})[0]['board_id_counter']
 column_id = column.find({"column_id_counter": {"$exists": "true"}})[0]['column_id_counter']
+task_id = tasks.find({"task_id_counter": {"$exists": "true"}})[0]['task_id_counter']
 user_hash = 0
 boards_info = []
-#for i in boards.find({'board_name': {"$exists": "true"}})[0]:
-#    boards_info.append(i)
-#boards_info.append(i)
 
 
 @app.route('/', methods=["GET"])
@@ -38,6 +37,7 @@ def main_page():
 @app.route('/register', methods=["GET", "POST"])
 def register_page(error=""):
     user_cookie = request.cookies.get('user_hash')
+
     if user_cookie is not None:
         if users.find_one({'user_data.4': user_cookie})['user_data'][4] == user_cookie:
             print('ok')
@@ -128,8 +128,6 @@ def workspace():
             if y in users.find_one({'user_data.4': user_cookie})['user_data'][5]:
                 b.append((x, y))
 
-        # print(a)
-        # print(boards_info)
         return templateLoader.get_template('workspace.html').render(boards=b)
 
 
@@ -144,7 +142,6 @@ def workspace_section(section):
     if int(section) not in users.find_one({'user_data.4': user_cookie})['user_data'][5]:
         return redirect('/login', 302)
 
-    # assert section == request.view_args['section']
     print()
     current_board_name = boards.find_one({'board_id': int(section)})['board_name']
     print(current_board_name)
@@ -179,16 +176,6 @@ def add_board():
     return redirect('/workspace', 302)
 
 
-@app.route('/workspace/add_task', methods=["GET", "POST"])
-def add_task():
-    return 'ok'
-
-
-@app.route('/workspace/add_column', methods=["POST", "GET"])
-def add_column():
-    return 'ok'
-
-
 @app.route('/status', methods=["GET", "POST"])
 def status():
     return {'status': 'ok'}
@@ -197,8 +184,74 @@ def status():
 @app.route('/workspace/get_info', methods=["GET", "POST"])
 def get_info():
     current_board_id = request.json
+    current_board_id_num = current_board_id['id']
+    print(current_board_id_num)
+    a = {}
+    print(column.count_documents({'board_id': int(current_board_id_num)}))
+    for i in range(column.count_documents({'board_id': int(current_board_id_num)})):
+        print(a)
+        x = column.find({'board_id': int(current_board_id_num)})[i]['column_id']
+        y = column.find({'board_id': int(current_board_id_num)})[i]['name']
+        a.update({str(i): {'column_id':   x, 'column_name': y}})
+        print({str(i): {'column_id':   x, 'column_name': y}})
 
-    return {'info': 'ok'}
+    return a
+
+
+@app.route('/add_column', methods=["GET", "POST"])
+def add_column():
+    global column_id
+    add_column_data = request.json
+    print('1', add_column_data)
+
+    add_name = add_column_data['name']
+    add_id = int(add_column_data['id'])
+    print(add_id)
+
+    column_id += 1
+    column.insert_one({'column_id': column_id, 'board_id': add_id, 'name': add_name})
+    column.update_one({"column_id_counter": {"$exists": "true"}}, {"$set": {"column_id_counter": column_id}})
+
+    return {'column_id': column_id}
+
+
+@app.route('/add_task', methods=['POST', 'GET'])
+def add_task():
+    global task_id
+    task_id += 1
+
+    add_task_data = request.json
+    print('task1', add_task_data)
+
+    add_name = add_task_data['name']
+    add_task_column = add_task_data['column']
+
+    tasks.insert_one({'task_name': add_name, 'task_column': add_task_column, 'task_id': task_id})
+    tasks.update_one({"task_id_counter": {"$exists": "true"}}, {"$set": {"task_id_counter": task_id}})
+    return {'status': 'ok'}
+
+
+@app.route('/get_tasks', methods=['POST', 'GET'])
+def get_tasks():
+    get_column_tasks = request.json
+    a = {}
+    current_task_id = tasks.find({"task_id_counter": {"$exists": "true"}})[0]['task_id_counter']
+    print(type(get_column_tasks), get_column_tasks)
+
+    cnt = 0
+    print('get req')
+    print(get_column_tasks)
+    for i in get_column_tasks:
+        print(i, tasks.count_documents({'task_column': str(i)}))
+        for j in range(tasks.count_documents({'task_column': str(i)})):
+            print(a)
+            x = tasks.find({'task_column': str(i)})[j]['task_id']
+            y = tasks.find({'task_column': str(i)})[j]['task_name']
+            z = tasks.find({'task_column': str(i)})[j]['task_column']
+            a.update({str(cnt): {'task_id': x, 'task_name': y, 'column_id': int(z)}})
+            print(1, {str(cnt): {'task_id': x, 'task_name': y, 'column_id': z}})
+            cnt += 1
+    return a
 
 
 app.run(host="0.0.0.0", port=1000)

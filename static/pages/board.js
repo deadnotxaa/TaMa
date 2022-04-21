@@ -18,6 +18,7 @@ wrapper.addEventListener('keydown', (event) => {
     if(event.key == "Enter"){
         console.log(event.target.getAttribute('class'))
         if((event.target.getAttribute('class') == 'create-button') && event.target.value != ""){
+            newTask(event.target.value, event.target.parentElement.id)
             event.target.insertAdjacentHTML('beforebegin', '<div class="list-group-item">' + event.target.value + "</div>");
             event.target.value = "";
             event.target.blur();
@@ -25,6 +26,18 @@ wrapper.addEventListener('keydown', (event) => {
             event.target.parentElement.insertAdjacentHTML('afterEnd','<div class="sort"><input class="create-column" placeholder=" + Создайте колонну"></div>');
             var element = event.target.parentElement;
             Sortable.create(element, params);
+            async function getCurId(){
+                var cur_id = await newColumn(event.target.value, id);
+                cur_id = cur_id['column_id'];
+                console.log(cur_id)
+                return cur_id;
+            }
+            ournewColumn = event.target.parentElement;
+            (async () => {
+                var cur_id = await getCurId();
+                console.log(cur_id)
+                ournewColumn.setAttribute('id', cur_id);
+            })()
             event.target.parentElement.setAttribute('class', 'list-group')
             event.target.insertAdjacentHTML('beforebegin',"<p>" + event.target.value + '</p><div class="hidden list-group-item"></div><input class="create-button" placeholder=" + Создайте задачу!">');
             event.target.value = "";
