@@ -15,6 +15,7 @@ template_env = jinja2.Environment(loader=jinja2.FileSystemLoader('./'))
 templateLoader = Environment(loader=FileSystemLoader(searchpath='./templates'))
 app = Flask(__name__, static_folder='./static', static_url_path='/static')
 CORS(app)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 user_id = users.find({"user_id_counter": {"$exists": "true"}})[0]["user_id_counter"]
 board_id = boards.find({"board_id_counter": {"$exists": "true"}})[0]['board_id_counter']
 user_hash = 0
@@ -100,6 +101,12 @@ def set_cookie():
 
 @app.route('/workspace', methods=['POST', 'GET'])
 def workspace():
+    user_cookie = request.cookies.get('user_hash')
+    print("cookie:", user_cookie)
+
+    if user_cookie is None:
+        return redirect('/login', 302)
+
     if request.method == "POST":
         board_redirect = request.form.get('board_redirect')
         print(board_redirect)
@@ -115,6 +122,12 @@ def workspace():
 
 @app.route('/workspace/<section>', methods=['POST', 'GET'])
 def workspace_section(section):
+    user_cookie = request.cookies.get('user_hash')
+    print("cookie:", user_cookie)
+
+    if user_cookie is None:
+        return redirect('/login', 302)
+
     assert section == request.view_args['section']
     print()
     current_board_name = boards.find_one({'board_id': int(section)})['board_name']
@@ -148,6 +161,5 @@ def add_column():
 @app.route('/status', methods=["GET", "POST"])
 def status():
     return {'status': 'ok'}
-
 
 app.run(host="0.0.0.0", port=1000)
