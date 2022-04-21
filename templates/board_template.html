@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/static/pages/board.css">
+    <script src="/static/jslib/sortable.js"></script>
 </head>
 <body>
-    <h1><a href="/">Back</a></h1>
-    <h1>{{board_name}}</h1>
+    <header>
+      <div class="lefts">
+        <a href="/" id="logo">TaMa</a>
+        <p>{{board_name}}</p>
+      </div>
+        <a href="#" id="boards">My boards</a>
+      <p class="user">Приятной работы, <span class="user">damik2005</span> <br> <a href="../index.html">Выход</a></p>
+    </header>
+    <div id="Todo">
+        <div class="list-group">
+            <p class="">Необходимо сделать</p>
+            <div class="hidden list-group-item"></div>
+            <input class="create-button" placeholder=" + Создайте задачу!">
+          </div>
+          <div class="list-group">
+            <p>Сделано</p>
+            <div class="hidden list-group-item"></div>
+            <div class="list-group-item"></div>
+            <input class="create-button" placeholder=" + Создайте задачу!">
+          </div>
+          <div class="list-group">
+            <p>Делаю</p>
+            <div class="hidden list-group-item"></div>
+            <input class="create-button" placeholder=" + Создайте задачу!">
+          </div>
+          <div class="sort">
+            <input class="create-column" placeholder=" + Создайте колонну">
+          </div>
+    </div>
+    <div id="overlay"></div>
+    <div id="task-window"></div>
+    <script src="/static/pages/board.js" type="application/javascript"></script>
 </body>
 </html>
