@@ -18,6 +18,10 @@ CORS(app)
 user_id = users.find({"user_id_counter": {"$exists": "true"}})[0]["user_id_counter"]
 board_id = boards.find({"board_id_counter": {"$exists": "true"}})[0]['board_id_counter']
 user_hash = 0
+boards_info = []
+for i in boards.find({'board_name': {"$exists": "true"}})[0]:
+    boards_info.append(i)
+boards_info.append(i)
 
 
 @app.route('/', methods=["GET"])
@@ -103,21 +107,27 @@ def workspace():
     else:
         a = []
         for i in range(boards.count_documents({'board_name': {"$exists": "true"}})):
-            a.append(boards.find({'board_name': {"$exists": "true"}})[i]['board_name'])
+            a.append((boards.find({'board_name': {"$exists": "true"}})[i]['board_name'], (boards.find({'board_id': {"$exists": "true"}})[i]['board_id'])))
         print(a)
+        print(boards_info)
         return templateLoader.get_template('workspace.html').render(boards=a)
 
 
 @app.route('/workspace/<section>', methods=['POST', 'GET'])
 def workspace_section(section):
     assert section == request.view_args['section']
-    return templateLoader.get_template('board_template.html').render(section=section)
+    print()
+    current_board_name = boards.find_one({'board_id': int(section)})['board_name']
+    print(current_board_name)
+    return templateLoader.get_template('board_template.html').render(section=section, board_name=current_board_name)
 
 
 @app.route('/workspace/add_board', methods=['POST', 'GET'])
 def add_board():
     global board_id
     board_name = request.form.get('board_name')
+    if board_name == "":
+        return redirect('/workspace', 302)
     print('f', board_name)
     board_id += 1
     boards.update_one({"board_id_counter": {"$exists": "true"}}, {"$set": {"board_id_counter": board_id}})
@@ -125,7 +135,17 @@ def add_board():
     return redirect('/workspace', 302)
 
 
-@app.route('/status', methods=["GET"])
+@app.route('/workspace/add_task', methods=["GET", "POST"])
+def add_task():
+    return 'ok'
+
+
+@app.route('/workspace/add_column', methods=["POST", "GET"])
+def add_column():
+    return 'ok'
+
+
+@app.route('/status', methods=["GET", "POST"])
 def status():
     return {'status': 'ok'}
 
