@@ -27,13 +27,13 @@ def main_page():
 
 
 @app.route('/register', methods=["GET", "POST"])
-def register_page():
+def register_page(error=""):
     user_cookie = request.cookies.get('user_hash')
     if user_cookie is not None:
         if users.find_one({'user_data.4': user_cookie})['user_data'][4] == user_cookie:
             print('ok')
             return redirect('/workspace', 302)
-    return templateLoader.get_template('register.html').render()
+    return templateLoader.get_template('register.html').render(error=error)
 
 
 @app.route('/registration', methods=["POST", "GET"])
@@ -42,6 +42,9 @@ def registration():
     user_name = request.form.get('username')
     user_password = request.form.get('password')
     user_email = request.form.get('email')
+
+    if users.count_documents({'user_data.0': user_name}) > 0 or users.count_documents({'user_data.1': user_email}) > 0:
+        return register_page("This login or email has been already used")
 
     global user_hash
     user_hash = secrets.token_hex(nbytes=64)
@@ -93,16 +96,16 @@ def set_cookie():
 
 @app.route('/workspace', methods=['POST', 'GET'])
 def workspace():
-    board_add = request.form.get('board_add')
-    if board_add is not None:
-        return redirect('/workspace/add_board', 302)
-
     if request.method == "POST":
         board_redirect = request.form.get('board_redirect')
         print(board_redirect)
         return redirect(url_for("workspace_section", section=board_redirect))
     else:
-        return templateLoader.get_template('workspace.html').render(count=boards.count_documents({'board_id': {"$exists": "true"}}))
+        a = []
+        for i in range(boards.count_documents({'board_name': {"$exists": "true"}})):
+            a.append(boards.find({'board_name': {"$exists": "true"}})[i]['board_name'])
+        print(a)
+        return templateLoader.get_template('workspace.html').render(boards=a)
 
 
 @app.route('/workspace/<section>', methods=['POST', 'GET'])
@@ -114,11 +117,11 @@ def workspace_section(section):
 @app.route('/workspace/add_board', methods=['POST', 'GET'])
 def add_board():
     global board_id
-    name = request.form.get('board_add')
+    board_name = request.form.get('board_name')
+    print('f', board_name)
     board_id += 1
     boards.update_one({"board_id_counter": {"$exists": "true"}}, {"$set": {"board_id_counter": board_id}})
-    #boards.insert_one({'board_id': board_id})
-    boards.insert_one({'board_id': board_id})
+    boards.insert_one({'board_id': board_id, 'board_name': board_name})
     return redirect('/workspace', 302)
 
 
