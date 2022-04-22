@@ -133,8 +133,8 @@ async function editDescription(id, description){
                     var main_id = cur_task['task_id']
                     editDescription(main_id, event.target.value)
                     event.target.blur()
-                    cur_task['task-description'] = event.target.value
-                    console.log(cur_task['task-description'])
+                    cur_task['task_description'] = event.target.value
+                    console.log(cur_task['task_description'])
                 }
             })
             console.log(cur_task['task_description'])

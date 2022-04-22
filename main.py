@@ -151,7 +151,8 @@ def workspace():
             if y in users.find_one({'user_data.4': user_cookie})['user_data'][5]:
                 b.append((x, y))
 
-        return templateLoader.get_template('workspace.html').render(boards=b)
+        current_user_id = users.find_one({'user_data.4': user_cookie})['user_data'][0]
+        return templateLoader.get_template('workspace.html').render(boards=b, user=current_user_id)
 
 
 @app.route('/delete_board', methods=['POST', 'GET'])
@@ -318,6 +319,15 @@ def edit_description():
     get_task_description = get_data['description']
     tasks.update_one({'task_id': int(get_task_id)}, {'$set': {'task_description': str(get_task_description)}})
 
+    return {'status': 'changed'}
+
+
+@app.route('/edit_task_name', methods=['GET', 'POST'])
+def edit_task_name():
+    get_data = request.json
+    get_task_id = get_data['id']
+    get_task_name = get_data['name']
+    tasks.update_one({'task_id': int(get_task_id)}, {'$set': {'task_name': str(get_task_name)}})
     return {'status': 'changed'}
 
 
