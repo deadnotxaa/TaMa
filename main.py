@@ -121,10 +121,24 @@ def workspace():
     if user_cookie is None:
         return redirect('/login', 302)
 
+    try:
+        x = users.find_one({'user_data.4': user_cookie})['user_data'][4]
+    except:
+        return redirect('/', 302)
+
     if request.method == "POST":
         board_redirect = request.form.get('board_redirect')
+        board_delete = request.form.get('board_delete')
         print(board_redirect)
-        return redirect(url_for("workspace_section", section=board_redirect))
+        print(board_delete)
+
+        if board_delete is not None:
+            return delete_board(board_delete)
+
+        if board_redirect is not None:
+            return redirect(url_for("workspace_section", section=board_redirect))
+        else:
+            return redirect('/workspace', 302)
     else:
         a = []
         b = []
@@ -138,6 +152,41 @@ def workspace():
                 b.append((x, y))
 
         return templateLoader.get_template('workspace.html').render(boards=b)
+
+
+@app.route('/delete_board', methods=['POST', 'GET'])
+def delete_board(board_delete_id):
+    #current_column_id = column.find_one({'column_id_counter': {'$exists': "true"}})
+    #current_task_id = tasks.find_one({'tasks_id_counter': {'$exists': 'true'}})
+    #current_board_id = boards.find_one({'boards_id_counter': {'$exists': 'true'}})
+
+    #current_board_id = int(current_board_id)
+    #current_column_id = int(current_column_id)
+    #current_task_id = int(current_task_id)
+
+    print('curr', board_delete_id, type(board_delete_id))
+    for i in range(column.count_documents({'board_id': int(board_delete_id)})):
+        x = column.find_one({'board_id': int(board_delete_id)})['column_id']
+        print('dddd', x)
+        print(':(')
+        print(tasks.count_documents({'task_column': str(x)}))
+        for j in range(tasks.count_documents({'task_column': str(x)})):
+            y = tasks.find_one({'task_column': str(x)})['task_id']
+            print(y)
+            tasks.delete_one({'task_id': int(y)})
+            print(';)')
+            #current_task_id -= 1
+            #tasks.update_one({"task_id_counter": {"$exists": "true"}}, {"$set": {"task_id_counter": int(current_task_id)}})
+
+        column.delete_one({'column_id': x})
+        #current_column_id -= 1
+        #column.update_one({'column_id_counter': {'$exists': 'true'}}, {'$set': {'column_id_counter': int(current_column_id)}})
+
+    boards.delete_one({'board_id': int(board_delete_id)})
+    #current_board_id -= 1
+    #boards.update_one({'board_id_counter': {'$exists': 'true'}}, {'$set': {'board_id_counter': int(current_board_id)}})
+
+    return redirect('/workspace', 302)
 
 
 @app.route('/workspace/<section>', methods=['POST', 'GET'])
@@ -179,10 +228,9 @@ def add_board():
     board_id += 1
     boards.update_one({"board_id_counter": {"$exists": "true"}}, {"$set": {"board_id_counter": board_id}})
     boards.insert_one({'board_id': board_id, 'board_name': board_name})
-
-    column.insert_one({'column_id': column_id, 'board_id': board_id, 'name': 'to-do'})
-    column_id += 1
-    column.update_one({"column_id_counter": {"$exists": "true"}}, {"$set": {"column_id_counter": column_id}})
+    #column.insert_one({'column_id': column_id, 'board_id': board_id, 'name': 'to-do'})
+    #column_id += 1
+    #column.update_one({"column_id_counter": {"$exists": "true"}}, {"$set": {"column_id_counter": column_id}})
 
     return redirect('/workspace', 302)
 
@@ -295,10 +343,14 @@ def delete_column():
     print('aaaa', tasks.count_documents({'task_column': get_column_id}))
 
     for i in range(tasks.count_documents({'task_column': get_column_id})):
-        x = tasks.find_one({'column_id': get_column_id})
-        print(x)
-        tasks.remove(x)
+        x = tasks.find_one({'task_column': get_column_id})['task_id']
+        print('columb', x)
+        tasks.delete_one({'task_id': x})
         print('delete-column:', x)
+
+    print('ffff', get_column_id, type(int(get_column_id)))
+    column.delete_one({'column_id': int(get_column_id)})
+
     return {'status': 'ok'}
 
 

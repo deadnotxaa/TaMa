@@ -9,7 +9,7 @@
     <br>
     {% for i in boards %}
     <form method="POST">
-        <h1>{{i[0]}}<input type="submit" name="board_redirect" value="{{(i[1])}}" /></h1>
+        <h1>{{i[0]}}<input type="submit" name="board_redirect" value="{{(i[1])}}" /> <input type="submit" name="board_delete" value="{{i[1]}}" /></h1>
     </form>
     {% endfor %}
     <form method="POST" action="/workspace/add_board">
