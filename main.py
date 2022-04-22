@@ -156,15 +156,7 @@ def workspace():
 
 @app.route('/delete_board', methods=['POST', 'GET'])
 def delete_board(board_delete_id):
-    #current_column_id = column.find_one({'column_id_counter': {'$exists': "true"}})
-    #current_task_id = tasks.find_one({'tasks_id_counter': {'$exists': 'true'}})
-    #current_board_id = boards.find_one({'boards_id_counter': {'$exists': 'true'}})
 
-    #current_board_id = int(current_board_id)
-    #current_column_id = int(current_column_id)
-    #current_task_id = int(current_task_id)
-
-    print('curr', board_delete_id, type(board_delete_id))
     for i in range(column.count_documents({'board_id': int(board_delete_id)})):
         x = column.find_one({'board_id': int(board_delete_id)})['column_id']
         print('dddd', x)
@@ -175,16 +167,10 @@ def delete_board(board_delete_id):
             print(y)
             tasks.delete_one({'task_id': int(y)})
             print(';)')
-            #current_task_id -= 1
-            #tasks.update_one({"task_id_counter": {"$exists": "true"}}, {"$set": {"task_id_counter": int(current_task_id)}})
 
         column.delete_one({'column_id': x})
-        #current_column_id -= 1
-        #column.update_one({'column_id_counter': {'$exists': 'true'}}, {'$set': {'column_id_counter': int(current_column_id)}})
 
     boards.delete_one({'board_id': int(board_delete_id)})
-    #current_board_id -= 1
-    #boards.update_one({'board_id_counter': {'$exists': 'true'}}, {'$set': {'board_id_counter': int(current_board_id)}})
 
     return redirect('/workspace', 302)
 
@@ -228,9 +214,6 @@ def add_board():
     board_id += 1
     boards.update_one({"board_id_counter": {"$exists": "true"}}, {"$set": {"board_id_counter": board_id}})
     boards.insert_one({'board_id': board_id, 'board_name': board_name})
-    #column.insert_one({'column_id': column_id, 'board_id': board_id, 'name': 'to-do'})
-    #column_id += 1
-    #column.update_one({"column_id_counter": {"$exists": "true"}}, {"$set": {"column_id_counter": column_id}})
 
     return redirect('/workspace', 302)
 

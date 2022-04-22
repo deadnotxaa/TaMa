@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tama - Register</title>
+    <link rel="stylesheet" href="/static/pages/register.css">
 </head>
+
 <body>
-    <h1><a href="/">Back</a></h1>
-    <br>
-    <form method="POST" action="registration">
-        <input type="text" placeholder="Username" name="username" />
-        <input type="password" placeholder="Password" name="password" />
-        <input type="email" placeholder="Email" name="email" />
-        <input type="submit" />
-    </form>
-    <h1>{{error}}</h1>
+    <div class="wrapper">
+        <a id="Logo" href="/">TaMa</a>
+        <div class="form">
+            <h1 id="title">Регистрация</h1>
+            <form method="POST" action="registration">
+                <input type="text" placeholder="Логин" name="username" required>
+                <input type="email" placeholder="Почта" name="email" required>
+                <input type="password" placeholder="Пароль" name="password" required>
+                <button type="submit" class="submit">Продолжить</button>
+            </form>
+            <a class="redirect" href="/login">Уже зарегестрированы?</a>
+        </div>
+    </div>
 </body>
 </html>

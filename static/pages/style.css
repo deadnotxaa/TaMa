@@ -147,11 +147,13 @@ header .enter-buttons #register:hover {
     text-align: left;
     margin: 50px;
     font-size: 25px;
-    width: 40%; 
+    width: 40%;
 }
 
 .why-us ul li {
     padding: 5px;
+    width: 80%;
+    text-align: justify;
 }
 
 .why-us ul li::before{
@@ -179,7 +181,7 @@ header .enter-buttons #register:hover {
 
 .example .list-group p {
     text-align: left;
-    font-size: 20px;
+    font-size: 23px;
     width: 100%;
     height: max-content;
     margin: 20px 0;
@@ -204,9 +206,10 @@ header .enter-buttons #register:hover {
     margin: 5px 0;
     padding: 1rem;
     border-radius: 0.5rem;
-    background-color: #FFF;
+    background-color: rgb(255, 250, 250);
     text-align: left;
-    font-size: 15px;
+    font-size: 18px;
+
 }
 
 /* Pricing */
@@ -265,7 +268,7 @@ header .enter-buttons #register:hover {
 }
 
 .price::after{
-    content: " ₽ / месяц за команду";
+    content: " ₽ / месяц";
     font-weight: 400;
 }
 
@@ -347,4 +350,20 @@ li:before {
 
 #start-btn:hover {
     background-color: white;
+}
+
+.beautifulimg {
+    width: 30%;
+    height: auto;
+    position: absolute;
+    right: 0%;
+    bottom: 10%;
+}
+
+.beautifulimg2 {
+    width: 30%;
+    height: auto;
+    position: absolute;
+    left: 0;
+    bottom: 4%;
 }

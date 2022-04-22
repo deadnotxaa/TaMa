@@ -2,19 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/pages/workspace.css">
     <title>Title</title>
 </head>
 <body>
-    <h1><a href="/">Back</a></h1>
-    <br>
-    {% for i in boards %}
-    <form method="POST">
-        <h1>{{i[0]}}<input type="submit" name="board_redirect" value="{{(i[1])}}" /> <input type="submit" name="board_delete" value="{{i[1]}}" /></h1>
-    </form>
-    {% endfor %}
-    <form method="POST" action="/workspace/add_board">
-        <h1><input type="text" name="board_name" /></h1>
-        <h1><input type="submit" value="add new board" hidden /></h1>
-    </form>
+    <header>
+        <div class="lefts">   
+          <a href="#" id="logo">TaMa</a>
+          <p>TaMa Project</p>
+        </div>
+          <a href="#" id="boards">Мои доски</a> 
+        <p class="user">Приятной работы, <span class="user">damik2005</span> <br> <a href="/user_exit">Выход</a></p>
+      </header>
+    <div class="wrapper">
+        <h1>Мои доски</h1>
+        <div class="boards">
+            {% for i in boards %}
+            <form method="POST" class="board-block">
+             <span class="name">{{i[0]}}</span><input class="enter" type="submit" name="board_redirect" value="{{(i[1])}}" /> <p class="delete-button">✖</p> <input class="delete" type="submit" name="board_delete" value="{{i[1]}}" />
+            </form>
+            {% endfor %}
+        </div>
+        <form method="POST" action="/workspace/add_board" class="inputform">
+            <h1><input type="text" name="board_name" placeholder="Создайте новую доску" class="input"/></h1>
+            <h1><input type="submit" value="add new board" hidden /></h1>
+        </form>
+    </div>
 </body>
 </html>

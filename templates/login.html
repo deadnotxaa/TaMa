@@ -1,15 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tama - Login</title>
+    <link rel="stylesheet" href="/static/pages/login.css">
 </head>
+
 <body>
-    <h1><a href="/">Back</a></h1>
-    <form method="POST" action="auth">
-        <input type="text" placeholder="Username" name="username_login" />
-        <input type="password" placeholder="Password" name="password_login" />
-        <input type="submit">
-    </form>
+    <div class="wrapper">
+        <a id="Logo" href="/">TaMa</a>
+        <div class="form">
+            <h1 id="title">Вход</h1>
+            <form method="POST" action="auth">
+                <input type="text" placeholder="Логин" name="username_login" required>
+                <input type="password" placeholder="Пароль" name="password_login" required>
+                <button type="submit" class="submit">Продолжить</button>
+            </form>
+            <a class="redirect" href="/register">Ещё зарегестрированы?</a>
+        </div>
+    </div>
 </body>
 </html>

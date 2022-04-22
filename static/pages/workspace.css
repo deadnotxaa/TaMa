@@ -1,0 +1,180 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background-attachment: fixed;
+}
+
+header {
+    position: relative;
+    height: 5vh;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.6s;
+    padding: 30px 50px;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+header .lefts {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: 10px;
+    width: 300px;
+}
+
+header .lefts #logo {
+    position: relative;
+    font-weight: 700;
+    color: #C287E8;
+    text-decoration: none;
+    font-size: 2rem; 
+    letter-spacing: 2px;
+    transition: 0.6s;
+}
+
+header .lefts p{
+    align-self: center;
+}
+
+header #boards {
+    text-decoration: none;
+    font-size: 20px;
+    color: #90809a;
+    transition: 0.5s;
+    width: 300px;
+    text-align: center;
+}
+
+header #boards:hover {
+    color: #C287E8;
+}
+
+header .user {
+    font-size: 18px;
+    text-align: end;
+    color: #90809a;
+    width: 300px;
+}
+
+header p a{
+    color: #90809a;
+}
+
+header .user {
+    color: #C287E8;
+}
+
+.wrapper {
+    background-color: #fffafd;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+}
+
+.wrapper .boards {
+    display: flex;
+    flex-wrap: wrap
+}
+
+.wrapper h1 {
+    flex: 0 0 100%;
+    height: 100px;
+    height: fit-content;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.wrapper .board-block {
+    box-shadow: rgba(0,0,0,0.1) 0 0 10px;
+    padding: 20px 35px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    position: relative;
+    width: 20%;
+    height: min-content;
+    text-align: center;
+    margin-right: 50px;
+}
+
+.wrapper .board-block .name {
+    margin: 10px;
+    font-size: 20px;
+}
+
+.wrapper .board-block .enter {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    border: none;
+    color: transparent;
+}
+
+.wrapper .board-block .delete-button {
+    top: 0;
+    right: 10px;
+    position: absolute;
+    color:rgb(120, 120, 120);
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.wrapper .board-block .delete {
+    width: 17px;
+    top: 0;
+    right: 10px;
+    position: absolute;
+    color:rgb(120, 120, 120);
+    cursor: pointer;
+    font-size: 20px;
+    background: transparent;
+    border: none;
+    color: transparent;
+    cursor: pointer;
+    z-index: 10000;
+}
+
+.wrapper .input {
+    width: 200px;
+    display: inline-block;
+    vertical-align: top;
+    background-color: transparent;
+    margin: 5px 0;
+    border: none;
+    padding: 5px;
+    border-radius: 0.5rem;
+}
+
+.wrapper .input:hover {
+    background-color: rgb(246, 239, 247);
+}
+
+.wrapper .input:focus {
+    box-shadow: rgba(0,0,0,0.1) 0 0 10px;
+    padding: 20px 35px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    position: relative;
+    width: 20%;
+    height: min-content;
+    text-align: center;
+    margin-right: 50px;
+    outline: none;
+    background-color: white !important;
+}

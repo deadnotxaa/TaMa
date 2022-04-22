@@ -7,5 +7,5 @@ Array.from(elements).forEach(element => {
 });
 
 document.getElementById('hero-btn').addEventListener('click', function(){
-    document.getElementById('start-btn').scrollIntoView({block: 'end', behavior: 'smooth'})
+    document.getElementById('scrollTo').scrollIntoView({block: 'end', behavior: 'smooth'})
 })
