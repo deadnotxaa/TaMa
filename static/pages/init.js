@@ -61,7 +61,7 @@ async function newTask(name, column) {
         columns.push(parseInt(columnobjects[i]['column_id']))
     }
     for (var i = Object.keys(columnobjects).length - 1; i >= 0; i--){
-        main.insertAdjacentHTML('afterbegin', '<div class="list-group" id="' +  columnobjects[i]['column_id'] + '"> <p>' + columnobjects[i]['column_name'] + '</p><div class="hidden list-group-item"></div><input class="create-button" placeholder=" + Создайте задачу!"</div>')
+        main.insertAdjacentHTML('afterbegin', '<div class="list-group" id="' +  columnobjects[i]['column_id'] + '"> <p>' + columnobjects[i]['column_name'] + '</p><div class="hidden list-group-item"></div><input class="create-button" placeholder="+ Создайте задачу!"</div>')
         Sortable.create(main.firstElementChild, params);
         cur_column = main.firstElementChild;
     }

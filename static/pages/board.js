@@ -23,7 +23,7 @@ wrapper.addEventListener('keydown', (event) => {
             event.target.value = "";
             event.target.blur();
         } else if (event.target.getAttribute('class') == 'create-column' && event.target.value != ""){
-            event.target.parentElement.insertAdjacentHTML('afterEnd','<div class="sort"><input class="create-column" placeholder=" + Создайте колонну"></div>');
+            event.target.parentElement.insertAdjacentHTML('afterEnd','<div class="sort"><input class="create-column" placeholder="Создайте колонну"></div>');
             var element = event.target.parentElement;
             Sortable.create(element, params);
             async function getCurId(){
@@ -45,6 +45,21 @@ wrapper.addEventListener('keydown', (event) => {
         }
     }
 })
+
+var buttons = document.getElementsByClassName('create-button')
+
+for(var i = 0; i < buttons.length; i++){
+        var cur_button = buttons[i];
+        function onBlur(event){
+            if((event.target.getAttribute('class') == 'create-button') && event.target.value != ""){
+                newTask(event.target.value, event.target.parentElement.id)
+                event.target.insertAdjacentHTML('beforebegin', '<div class="list-group-item">' + event.target.value + "</div>");
+                event.target.value = "";
+                event.target.blur();
+            }
+        }
+        cur_button.addEventListener('blur', onBlur)
+}
 
 wrapper.addEventListener('click', (event) => {
     if(event.target.className == "list-group-item"){

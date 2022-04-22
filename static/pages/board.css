@@ -93,16 +93,6 @@ header .user {
     background-color: #fffafd;
 }
 
-.create-button {
-    display: inline-block;
-    vertical-align: top;
-    width: 100%;
-    box-shadow: rgba(0,0,0,0.1) 0 0 7px;
-    background-color: white;
-    margin: 5px 0;
-    border-radius: 0.5rem;
-}
-
 .list-group{
     padding: 20px 35px;
     height: 100%;
@@ -121,6 +111,35 @@ header .user {
     margin: 20px 0;
 }
 
+.list-group .create-button {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    background-color: transparent;
+    margin: 5px 0;
+    border: none;
+    padding: 5px;
+    border-radius: 0.5rem;
+}
+
+.list-group .create-button:hover {
+    background-color: rgb(251, 243, 252);
+}
+
+.list-group .create-button:focus {
+    overflow: hidden;
+    box-shadow: rgba(0,0,0,0.1) 0 0 7px;
+    min-height: 15px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    width: 100%;
+    margin: 5px 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #FFF;
+    outline: none;
+    font-size: 15px;
+}
 .sort {
     width: 200px;
     padding: 15px;
@@ -140,6 +159,8 @@ header .user {
     padding: 1rem;
     border-radius: 0.5rem;
     background-color: #FFF;
+    text-align: left;
+    font-size: 15px;
 }
 
 .wrapper {
@@ -163,8 +184,28 @@ header .user {
 }
 
 .create-column {
-    color: rgba(0, 0, 0, 0.21);
+    color: rgba(0, 0, 0, 0.41);
     margin-top: 72px;
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+    border-radius: 0.5rem;
+}
+
+.create-column:hover {
+    background-color: rgb(251, 243, 252);
+}
+
+.create-column:focus {
+    outline: none;  
+    background-color: #fffafd;
+    font-size: 20px;
+    width: max-content;
+    margin-top: 20px;
+    color:black;
 }
 
 #input {
