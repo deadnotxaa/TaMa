@@ -7,12 +7,15 @@ import secrets
 from flask_cors import CORS
 from bson.json_util import dumps, loads
 
-client = MongoClient("localhost", 27017)
-db = client.database
-users = db.users
-boards = db.boards
-tasks = db.tasks
-column = db.column
+if False:
+    pass
+else:
+    client = MongoClient("localhost", 27017)
+    db = client.database
+    users = db.users
+    boards = db.boards
+    tasks = db.tasks
+    column = db.column
 
 template_env = jinja2.Environment(loader=jinja2.FileSystemLoader('./'))
 templateLoader = Environment(loader=FileSystemLoader(searchpath='./templates'))
@@ -48,10 +51,14 @@ def register_page(error=""):
 @app.route('/registration', methods=["POST", "GET"])
 def registration():
     global user_id
-    user_name = request.form.get('username')
-    user_password = request.form.get('password')
-    user_email = request.form.get('email')
-    user_boards = []
+
+    if False:
+        pass
+    else:
+        user_name = request.form.get('username')
+        user_password = request.form.get('password')
+        user_email = request.form.get('email')
+        user_boards = []
 
     if users.count_documents({'user_data.0': user_name}) > 0 or users.count_documents({'user_data.1': user_email}) > 0:
         return register_page("This login or email has been already used")
