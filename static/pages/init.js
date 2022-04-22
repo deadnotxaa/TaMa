@@ -54,6 +54,19 @@ async function newTask(name, column) {
     return await response_nc.json()
 }
 
+async function changeColumn(to, task_id){
+    const url_cc = '/change_column'
+    const settings = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({to, task_id})
+    }
+    var response_cc = await fetch(url_cc, settings);
+    return await response_cc.json()
+}
+
 (async()=>{
     var columnobjects = await getcolumns();
     main = document.getElementById('Todo');
@@ -70,6 +83,6 @@ async function newTask(name, column) {
     for (var i = Object.keys(taskobjects).length - 1; i >= 0; i--){
         //console.log(taskobjects[i]['column_id'])
         //console.log(i, toString(taskobjects[i]['column_id']))
-        document.getElementById(String(taskobjects[i]['column_id'])).firstElementChild.nextElementSibling.insertAdjacentHTML('afterend', '<div class="list-group-item">' + taskobjects[i]['task_name'] + '</div>')
+        document.getElementById(String(taskobjects[i]['column_id'])).firstElementChild.nextElementSibling.insertAdjacentHTML('afterend', '<div class="list-group-item"' + 'id="t' + taskobjects[i]['task_id'] + '">' + taskobjects[i]['task_name'] + '</div>')
     }
 })()

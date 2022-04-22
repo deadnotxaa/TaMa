@@ -2,6 +2,9 @@ var moving = false
 const params = {group: 'shared', draggable:'.list-group-item', ghostClass:"ghost", dragClass:"drag", chosenClass: "choose", forceFallback:true, onStart: function(evt){
     evt.item.setAttribute('class', 'list-group-item nodrag ghost')
 }, onEnd: function(evt){
+    if (evt.to != evt.from){
+        changeColumn(evt.to.id, evt.item.id.slice(1));
+    }
     setTimeout(function(){
         evt.item.setAttribute('class', 'list-group-item');
     }, 1)
@@ -18,8 +21,21 @@ wrapper.addEventListener('keydown', (event) => {
     if(event.key == "Enter"){
         console.log(event.target.getAttribute('class'))
         if((event.target.getAttribute('class') == 'create-button') && event.target.value != ""){
-            newTask(event.target.value, event.target.parentElement.id)
-            event.target.insertAdjacentHTML('beforebegin', '<div class="list-group-item">' + event.target.value + "</div>");
+            var tname = event.target.value;
+            var cid = event.target.parentElement.id;
+            var task_id
+            async function getTaskId(){
+                return await newTask(tname, cid);
+            }
+            var insert_to = event.target;
+            var valueof = event.target.value;
+            (async () => {
+                task_id = await getTaskId();
+                task_id = task_id['id'];
+                console.log(task_id);
+                insert_to.insertAdjacentHTML('beforebegin', '<div class="list-group-item" id="t' + task_id + '">'+ valueof + "</div>");
+            })()
+
             event.target.value = "";
             event.target.blur();
         } else if (event.target.getAttribute('class') == 'create-column' && event.target.value != ""){

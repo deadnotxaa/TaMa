@@ -151,10 +151,12 @@ def workspace_section(section):
     if int(section) not in users.find_one({'user_data.4': user_cookie})['user_data'][5]:
         return redirect('/login', 302)
 
-    print()
     current_board_name = boards.find_one({'board_id': int(section)})['board_name']
     print(current_board_name)
-    return templateLoader.get_template('board_template.html').render(section=section, board_name=current_board_name)
+
+    current_user_name = users.find_one({'user_data.4': user_cookie})['user_data'][0]
+
+    return templateLoader.get_template('board_template.html').render(section=section, board_name=current_board_name, user=current_user_name)
 
 
 @app.route('/workspace/add_board', methods=['POST', 'GET'])
@@ -237,7 +239,7 @@ def add_task():
 
     tasks.insert_one({'task_name': add_name, 'task_column': add_task_column, 'task_id': task_id})
     tasks.update_one({"task_id_counter": {"$exists": "true"}}, {"$set": {"task_id_counter": task_id}})
-    return {'status': 'ok'}
+    return {'id': task_id}
 
 
 @app.route('/get_tasks', methods=['POST', 'GET'])
@@ -271,7 +273,8 @@ def change_column():
     new_column_id = get_change_info['to']
     changing_task_id = get_change_info['task_id']
 
-    tasks.update_one({"task_id": changing_task_id}, {"$set": {"task_column": new_column_id}})
+    tasks.update_one({"task_id": int(changing_task_id)}, {"$set": {"task_column": str(new_column_id)}})
+    print('change_column', new_column_id, changing_task_id)
 
     return {'status': 'ok'}
 
@@ -286,6 +289,21 @@ def user_exit():
 
 @app.route('/delete_column', methods=['POST', 'GET'])
 def delete_column():
+    get_column_id = request.json
+    get_column_id = get_column_id['id']
+
+    for i in range(tasks.count_documents({'task_column': get_column_id})):
+        x = tasks.find({'column_id': get_column_id})
+        tasks.remove(x)
+        print(x)
+    return {'status': 'ok'}
+
+
+@app.route('/delete_task', methods=['POST', 'GET'])
+def delete_task():
+    get_task_id = request.json
+    get_task_id = get_task_id['id']
+    tasks.remove({'task_id': get_task_id})
     return {'status': 'ok'}
 
 
