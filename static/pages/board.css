@@ -101,14 +101,16 @@ header .user {
     overflow-y: auto;
     margin:20px 0;
     border-radius: 4px;
+    position: relative;
 }
 
 .list-group p {
     text-align: left;
     font-size: 20px;
-    width: 100%;
+    width: 80%;
     height: max-content;
     margin: 20px 0;
+    display: inline-block;
 }
 
 .list-group .create-button {
@@ -272,4 +274,11 @@ header .user {
     border-radius: 0.5rem;
     position: relative;
     text-align: left;
+}
+
+.delete-button {
+    text-align: right !important;
+    width: 20% !important;
+    color:rgb(120, 120, 120);
+    cursor: pointer;
 }

@@ -292,10 +292,13 @@ def delete_column():
     get_column_id = request.json
     get_column_id = get_column_id['id']
 
+    print('aaaa', tasks.count_documents({'task_column': get_column_id}))
+
     for i in range(tasks.count_documents({'task_column': get_column_id})):
-        x = tasks.find({'column_id': get_column_id})
-        tasks.remove(x)
+        x = tasks.find_one({'column_id': get_column_id})
         print(x)
+        tasks.remove(x)
+        print('delete-column:', x)
     return {'status': 'ok'}
 
 
