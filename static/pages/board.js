@@ -69,6 +69,8 @@ wrapper.addEventListener('keydown', (event) => {
         }
     }
 })
+    
+
 
 var buttons = document.getElementsByClassName('create-button')
 
@@ -85,12 +87,6 @@ for(var i = 0; i < buttons.length; i++){
         cur_button.addEventListener('blur', onBlur)
 }
 
-wrapper.addEventListener('click', (event) => {
-    if(event.target.className == "list-group-item"){
-        document.getElementById('overlay').style.display = 'block';
-        document.getElementById('task-window').style.display = 'block';
-    }
-})
 
 overlay.addEventListener('click', (event) =>{
     document.getElementById('overlay').style.display = 'none';

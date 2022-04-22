@@ -238,7 +238,7 @@ header .user {
     position: absolute;
     background-color: white;
     border-radius: 10px;
-    text-align: center;
+    text-align: left;
     z-index: 11;
     padding: 0 20px;
 }
@@ -247,6 +247,7 @@ header .user {
     padding: 10px 20px;
     text-align: left;
     font-size: 25px;
+    margin-top: 20px;
 }
 
 #task-window .characteristics {
@@ -255,7 +256,7 @@ header .user {
 }
 
 #task-window .description-wrapper {
-    margin: auto 0;
+    text-align: left;
     display: inline-block;
     width: 80%;
 }
@@ -269,11 +270,18 @@ header .user {
 }
 
 #task-window .description-wrapper .task-description {
-    background-color: rgb(246, 246, 246);
+    background-color: white;
     width: 100%;
     border-radius: 0.5rem;
     position: relative;
     text-align: left;
+    word-wrap: break-word;
+    margin: 20px;
+    padding: 10px;
+}
+
+.task-name {
+    word-wrap: break-word;
 }
 
 .delete-button {
@@ -281,4 +289,9 @@ header .user {
     width: 20% !important;
     color:rgb(120, 120, 120);
     cursor: pointer;
+}
+
+.desc-name {
+    padding: 20px;
+    color: gray;
 }

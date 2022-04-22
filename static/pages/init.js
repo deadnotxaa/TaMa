@@ -80,6 +80,21 @@ async function deleteColumn(id){
     return await response_dc.json()
 }
 
+async function editDescription(id, description){
+    const url_ed = '/edit_description'
+    const settings = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id, description})
+    }
+    console.log({id, description})
+    var response_ed = await fetch(url_ed, settings);
+    return await response_ed.json();
+}
+
+
 (async()=>{
     var img = '<img class="delete-column" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAABfUlEQVRoge2YoU4DQRCG/7mro+Wuvjg8JCXhHRC8BAmmtRCqQEIguIoqPMEhEPAKfQECDgvljuLIDYYmFO56O+zS5ch8ZsU/sztf9tYcoCiK4hNyuVl/d3gAxv6sGmY+6p6s7bk605mAyfATXEoYCVye3W8gywYAWi4ONeCBQdubW8tXZYWB0XbzHR4AWgQemBSaCcx3+AlLJkWmAn8W0SPu7wz5twb5TOe4bTxX5W9ABXxTeYGaTfNo9II0fUW0uIC42fiWJckYABBH9dy8qFeC1Q0kyRhZluH5Y9CvGTODmQvzol4JVgLMPLXmZWV5Xiah8m9ABXyjAr5RAd+ogG9UwDcq4BsV8I0K+MZKgIim1rysLM/LJFgJxFEdQUCIonpuRkQgKs6LeiVY/ZWIm43CPwqzMpPcFOkNpNYnlpNIimUCjBtR/U9gvpaUiwQ4C3sAHkUDSfYHPaFGPUmPSKB7unobvIUrIJzD7eeUgvmCQl7vHLbvHO6rKP+ed2yBftABMd1OAAAAAElFTkSuQmCC"/>'
     var columnobjects = await getcolumns();
@@ -99,4 +114,34 @@ async function deleteColumn(id){
         //console.log(i, toString(taskobjects[i]['column_id']))
         document.getElementById(String(taskobjects[i]['column_id'])).firstElementChild.nextElementSibling.insertAdjacentHTML('afterend', '<div class="list-group-item"' + 'id="t' + taskobjects[i]['task_id'] + '">' + taskobjects[i]['task_name'] + '</div>')
     }
+
+    wrapper.addEventListener('click', (event) => {
+        if(event.target.className == "list-group-item"){
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('task-window').style.display = 'block';
+            tid = event.target.id.slice(1)
+            for (var i = Object.keys(taskobjects).length - 1; i >= 0; i--){
+                //console.log(taskobjects[i]['column_id'])
+                //console.log(i, toString(taskobjects[i]['column_id']))
+                if (parseInt(tid) == taskobjects[i]['task_id']){
+                    var cur_task = taskobjects[i]
+                    var cur_task_ind = i
+                }
+            }
+            document.getElementById('task-window').addEventListener('keydown', (event) => {
+                if (event.target.getAttribute('class') == 'task-description' && event.key == 'Enter'){
+                    var main_id = cur_task['task_id']
+                    editDescription(main_id, event.target.value)
+                    event.target.blur()
+                    cur_task['task-description'] = event.target.value
+                    console.log(cur_task['task-description'])
+                }
+            })
+            console.log(cur_task['task_description'])
+            document.getElementById('task-window').insertAdjacentHTML('afterbegin', '<p class="task-name">' + cur_task['task_name'] + '</p><div class="description-wrapper"><p class="desc-name">Описание:</p><textarea class="task-description">' + cur_task['task_description'] + '</textarea></div>')
+        }
+    })
+    document.getElementById('overlay').addEventListener('click', (event) => {
+        document.getElementById('task-window').innerHTML=""
+    })
 })()

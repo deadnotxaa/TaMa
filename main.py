@@ -268,7 +268,7 @@ def add_task():
     add_name = add_task_data['name']
     add_task_column = add_task_data['column']
 
-    tasks.insert_one({'task_name': add_name, 'task_column': add_task_column, 'task_id': task_id})
+    tasks.insert_one({'task_name': add_name, 'task_column': add_task_column, 'task_id': task_id, 'task_description': ''})
     tasks.update_one({"task_id_counter": {"$exists": "true"}}, {"$set": {"task_id_counter": task_id}})
     return {'id': task_id}
 
@@ -290,8 +290,8 @@ def get_tasks():
             x = tasks.find({'task_column': str(i)})[j]['task_id']
             y = tasks.find({'task_column': str(i)})[j]['task_name']
             z = tasks.find({'task_column': str(i)})[j]['task_column']
-            a.update({str(cnt): {'task_id': x, 'task_name': y, 'column_id': int(z)}})
-            print(1, {str(cnt): {'task_id': x, 'task_name': y, 'column_id': z}})
+            k = tasks.find({'task_column': str(i)})[j]['task_description']
+            a.update({str(cnt): {'task_id': x, 'task_name': y, 'column_id': int(z), 'task_description': k}})
             cnt += 1
     return a
 
@@ -308,6 +308,17 @@ def change_column():
     print('change_column', new_column_id, changing_task_id)
 
     return {'status': 'ok'}
+
+
+@app.route('/edit_description', methods=['POST', 'GET'])
+def edit_description():
+    get_data = request.json
+    get_task_id = get_data['id']
+    print(get_data, get_task_id)
+    get_task_description = get_data['description']
+    tasks.update_one({'task_id': int(get_task_id)}, {'$set': {'task_description': str(get_task_description)}})
+
+    return {'status': 'changed'}
 
 
 @app.route('/user_exit', methods=['POST', 'GET'])
