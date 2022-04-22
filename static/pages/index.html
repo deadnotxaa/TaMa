@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport"   content="width=device-width, initial-scale=1.0">
+    <title>Tama</title>
+    <script src="../jslib/sortable.js"></script>
+</head>
+<body>
+    <header>
+        <a href="index.html" id="logo">TaMa</a>
+        <div class="enter-buttons">
+            <a id="enter" href="./pages/login.html">Войти</a>
+            <a id="register" href="./pages/register.html">Регистрация</a>
+        </div>
+    </header>
+    <section class="banner">
+        <div class="text-box">
+            <h1>Мы делаем работу над проектами <span class="extra">проще</span></h1>
+            <a id="hero-btn">Начать работу</a>
+        </div>
+    </section>
+    <section class="why-us">
+        <h2>Попробуйте сами:</h2>
+        <ul>
+            <li>Удобно распределяйте задачи по технологии scrum-досок</li>
+            <li>Работайте над несколькими проектами одновременно</li>
+            <li>Назначайте роли и грейды в вашей команде</li>
+            <li>Автоматизируйте рутинные процессы</li>
+            <li>Кастомизируйте рабочее пространство</li>
+        </ul>
+        <div class="example">
+            <div class="list-group">
+                <p>Сделать</p>
+                <div class = "list-group-item">Пофиксить гейзенбаг авторизации</div>
+            </div>
+            <div class="list-group">
+                <p>Сделано</p>
+            </div>
+        </div>
+    </section>
+    <section class="pricing">
+        <h2>Выберите удобный для вас план</h2>
+        <div class = 'pr-wrapper'>
+            <div class="package">
+                <div class="name">Community</div>
+                <div class="price">0</div>
+                <div class="trial">Полностью бесплатно</div>
+                <hr>
+                <ul>
+                    <li>Доступ ко всем функциям <span class="cursor" >TaMa</span></li>
+                    <li>До 7 человек в команде</li>
+                    <li>Организация работы в комнде</li>
+                </ul>
+            </div>
+            <div class="package">
+                <div class="name">Basic</div>
+                <div class="price">20,000</div>
+                <div class="trial">Первая неделя бесплатно</div>
+                <hr>
+                <ul>
+                    <li>Доступ ко всем функциям <span class="cursor" >TaMa</span></li>
+                    <li>До 50 человек в команде</li>
+                    <li>Организация работы в комнде</li>
+                </ul>
+            </div>
+            <div class="package">
+                <div class="name">Enterprise</div>
+                <div class="price">90,000</div>
+                <div class="trial">Первый месяц бесплатно*</div>
+                <hr>
+                <ul>
+                    <li>Доступ ко всем функциям <span class="cursor" >TaMa</span></li>
+                    <li>Любой размер команды</li>
+                    <li>Организация работы в комнде</li>
+                </ul>
+                <div class="subscription">* При покупке от 6 месяцев</div>
+            </div>
+        </div>
+        <div class="btn-wrapper">
+            <a href="./pages/register.html" id="start-btn">Начать работу</a>
+        </div>
+    </section>
+    <script type="text/javascript">
+        window.addEventListener('scroll', function(){
+            var header = document.querySelector('header');
+            header.classList.toggle("sticky", window.scrollY > 0);
+        });
+    </script>
+    <script src="sort.js"></script>
+</body>
+</html>
