@@ -94,6 +94,31 @@ async function editDescription(id, description){
     return await response_ed.json();
 }
 
+async function editTask(id, name){
+    const url_ed = '/edit_task_name'
+    const settings = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id, name})
+    }
+    var response_ed = await fetch(url_ed, settings);
+    return await response_ed.json();
+}
+
+async function deleteTask(id){
+    const url_ed = '/delete_task'
+    const settings = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id})
+    }
+    var response_ed = await fetch(url_ed, settings);
+    return await response_ed.json();
+}
 
 (async()=>{
     var img = '<img class="delete-column" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAABfUlEQVRoge2YoU4DQRCG/7mro+Wuvjg8JCXhHRC8BAmmtRCqQEIguIoqPMEhEPAKfQECDgvljuLIDYYmFO56O+zS5ch8ZsU/sztf9tYcoCiK4hNyuVl/d3gAxv6sGmY+6p6s7bk605mAyfATXEoYCVye3W8gywYAWi4ONeCBQdubW8tXZYWB0XbzHR4AWgQemBSaCcx3+AlLJkWmAn8W0SPu7wz5twb5TOe4bTxX5W9ABXxTeYGaTfNo9II0fUW0uIC42fiWJckYABBH9dy8qFeC1Q0kyRhZluH5Y9CvGTODmQvzol4JVgLMPLXmZWV5Xiah8m9ABXyjAr5RAd+ogG9UwDcq4BsV8I0K+MZKgIim1rysLM/LJFgJxFEdQUCIonpuRkQgKs6LeiVY/ZWIm43CPwqzMpPcFOkNpNYnlpNIimUCjBtR/U9gvpaUiwQ4C3sAHkUDSfYHPaFGPUmPSKB7unobvIUrIJzD7eeUgvmCQl7vHLbvHO6rKP+ed2yBftABMd1OAAAAAElFTkSuQmCC"/>'
@@ -135,10 +160,32 @@ async function editDescription(id, description){
                     event.target.blur()
                     cur_task['task_description'] = event.target.value
                     console.log(cur_task['task_description'])
+                } else if(event.target.getAttribute('class') == 'task-name' && event.key == 'Enter'){
+                    console.log('Fa')
+                    var main_id = cur_task['task_id']
+                    editTask(main_id, event.target.value)
+                    event.target.blur()
+                    cur_task['task_name'] = event.target.value
+
+                    document.getElementById("t" + main_id).textContent = event.target.value
+                }
+            })
+            document.getElementById('task-window').addEventListener('click', (event) => {
+                if(event.target.className == 'del_task_btn'){
+                    currr_id = event.target.parentElement.parentElement.className.slice(2)
+                    deleteTask(currr_id)
+                    document.getElementById('task-window').innerHTML=""
+                    document.getElementById('overlay').style.display = 'none';
+                    document.getElementById('task-window').style.display = 'none';
+                    document.body.style.overflow = 'visible';
+                    
+                    document.getElementById('t' + String(currr_id)).remove()
+
                 }
             })
             console.log(cur_task['task_description'])
-            document.getElementById('task-window').insertAdjacentHTML('afterbegin', '<p class="task-name">' + cur_task['task_name'] + '</p><div class="description-wrapper"><p class="desc-name">Описание:</p><textarea class="task-description">' + cur_task['task_description'] + '</textarea></div>')
+            document.getElementById('task-window').setAttribute('class', 'tw' + cur_task['task_id'])
+            document.getElementById('task-window').insertAdjacentHTML('afterbegin', '<input class="task-name" value="' + cur_task['task_name'] + '"><div class="description-wrapper"><p class="desc-name">Описание:</p><textarea placeholder="Напишите описание..." class="task-description">' + cur_task['task_description'] + '</textarea><p class="del_task_btn">Удалить</p></div>')
         }
     })
     document.getElementById('overlay').addEventListener('click', (event) => {

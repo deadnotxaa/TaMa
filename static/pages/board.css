@@ -281,14 +281,20 @@ header .user {
     height: 100%;
     border:none;
     transition: all 0.1s;
+    color:rgb(192, 192, 192);
 }
 
 #task-window .description-wrapper .task-description:hover{
     box-shadow: 0 0 5px rgba(0,0,0,0.3);
 }
 
+#task-window .description-wrapper .task-description:focus{
+    color: black;
+}
+
 .task-name {
     word-wrap: break-word;
+    border: none;
 }
 
 .delete-button {
@@ -301,4 +307,14 @@ header .user {
 .desc-name {
     color: gray;
     padding: 10px 0;
+}
+
+.del_task_btn {
+    margin-top: 10px;
+    cursor: pointer;
+    color: gray;
+}
+
+.del_task_btn:hover {
+    color: red;
 }

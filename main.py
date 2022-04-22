@@ -361,8 +361,9 @@ def delete_column():
 @app.route('/delete_task', methods=['POST', 'GET'])
 def delete_task():
     get_task_id = request.json
-    get_task_id = get_task_id['id']
-    tasks.remove({'task_id': get_task_id})
+    get_task_id_1 = get_task_id['id']
+    print('debug:', get_task_id, get_task_id_1, type(get_task_id_1))
+    tasks.delete_one({'task_id': int(get_task_id_1)})
     return {'status': 'ok'}
 
 
